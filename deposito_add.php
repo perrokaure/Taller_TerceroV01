@@ -36,30 +36,39 @@
                                     </a>
                                 </div>
                             </div>
+
                             <form action="deposito_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                 <div class="box-body">
                                     <div class="form-group">
                                         <input type="hidden" name="accion" value="1" />
-                                        <input type="hidden" name="vart_cod" value="0" />
-                                        <label class="control-label col-lg-2 col-md-2 col-sm-2"> Cod. Barra:</label>
-                                        <div class="col-lg-4 col-md-5 col-sm-5">
-                                            <input type="text" name="vart_codbarra" class="form-control" required="" autofocus="" />
+                                        <input type="hidden" name="vdep_cod" value="0">
+                                        <label class="control-label col-sm-2">Descripción:</label>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <input type="text" name="vdep_descri" class="form-control" required="" />
                                         </div>
+                                        <!--div class="form-group">
+                                            <label class="control-label col-sm-2">Descripción:</label>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <input type="text" name="vart_descri" class="form-control" required="" />
+                                            </div>
+                                        </div-->
+
                                     </div>
+
                                     <!-- AGREGAR LISTA DESPLEGABLE MARCA -->
                                     <div class="form-group">
-                                        <label class="control-label col-lg-2">Marca:</label>
+                                        <label class="control-label col-lg-2">Sucursal:</label>
                                         <div class="col-lg-5 col-md-5 col-sm-5">
                                             <div class="input-group">
-                                                <?php $marcas = consultas::get_datos("select * from marca order by mar_descri"); ?>
-                                                <select class="form-control select2" name="vmar_cod" required="">
-                                                    <option value="">Seleccione una marca</option>
-                                                    <?php foreach ($marcas as $marca) { ?>
-                                                        <option value="<?php echo $marca['mar_cod']; ?>"><?php echo $marca['mar_descri']; ?></option>
-                                                    <?php } ?>
-                                                </select>
+                                              <?php $marcas = consultas::get_datos("select * from Sucursal order by suc_descri"); ?>
+                                              <select class="form-control select2" name="vid_sucursal" required="">
+                                                  <option value="">Seleccione una marca</option>
+                                                  <?php foreach ($marcas as $marca) { ?>
+                                                      <option value="<?php echo $marca['id_sucursal']; ?>"><?php echo $marca['suc_descri']; ?></option>
+                                                  <?php } ?>
+                                              </select>
                                                 <span class="input-group-btn btn-flat">
-                                                    <a class="btn btn-primary" data-title="Agregar Marca " rel="tooltip" data-placement="top" data-toggle="modal" data-target="#registrar">
+                                                    <a class="btn btn-primary" data-title="Agregar Sucursal " rel="tooltip" data-placement="top" data-toggle="modal" data-target="#registrar">
                                                         <i class="fa fa-plus"></i>
                                                     </a>
                                                 </span>
@@ -67,7 +76,7 @@
                                         </div>
                                     </div>
                                     <!-- FIN LISTA DESPLEGABLE MARCA -->
-                                    <div class="form-group">
+                                    <!--div class="form-group">
                                         <label class="control-label col-sm-2">Descripción:</label>
                                         <div class="col-lg-6 col-md-6 col-sm-6">
                                             <input type="text" name="vart_descri" class="form-control" required="" />
@@ -84,27 +93,9 @@
                                         <div class="col-lg-4 col-md-4 col-sm-4">
                                             <input type="number" name="vart_preciov" class="form-control" min="0" />
                                         </div>
-                                    </div>
+                                    </div-->
                                     <!-- AGREGAR LISTA DESPLEGABLE IMPUESTO -->
-                                    <div class="form-group">
-                                        <label class="control-label col-lg-2">Impuesto:</label>
-                                        <div class="col-lg-5 col-md-5 col-sm-5">
-                                            <div class="input-group">
-                                                <?php $tipos = consultas::get_datos("select * from tipo_impuesto order by tipo_cod"); ?>
-                                                <select class="form-control select2" name="vtipo_cod" required="">
-                                                    <option value="">Seleccione un impuesto</option>
-                                                    <?php foreach ($tipos as $tipo) { ?>
-                                                        <option value="<?php echo $tipo['tipo_cod']; ?>"><?php echo $tipo['tipo_descri']; ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                                <span class="input-group-btn btn-flat">
-                                                    <a class="btn btn-primary" data-title="Agregar Impuesto " rel="tooltip" data-placement="top" data-toggle="modal" data-target="#registrar2">
-                                                        <i class="fa fa-plus"></i>
-                                                    </a>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     <!-- FIN LISTA DESPLEGABLE MARCA -->
                                 </div>
                                 <div class="box-footer">
@@ -121,22 +112,25 @@
         </div>
         <?php require 'menu/footer_lte.ctp'; ?>
         <!--ARCHIVOS JS-->
+
         <!-- MODAL REGISTRAR -->
         <div class="modal fade" id="registrar" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
+
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
-                        <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Marca</strong></h4>
+                        <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Sucursal</strong></h4>
                     </div>
-                    <form action="marca_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
-                        <input type="hidden" name="accion" value="4">
-                        <input type="hidden" name="vmar_cod" value="0">
+
+                    <form action="Sucursal_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                        <input type="hidden" name="accion" value="1">
+                        <input type="hidden" name="vid_sucursal" value="0">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label class="control-label col-sm-2">Descripción:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="vmar_descri" class="form-control" required="" autofocus="" />
+                                    <input type="text" name="vsuc_descri" class="form-control" required="" autofocus="" />
                                 </div>
                             </div>
                         </div>

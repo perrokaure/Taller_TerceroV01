@@ -86,10 +86,14 @@
                                                                 <td data-title='Descripción'><?php echo $art['dep_descri'] /*. " " . $art['suc_descri']*/; ?></td>
                                                                 <td data-title='Sucursal'><?php echo $art['suc_descri']; ?></td>
 
-                                                                <!td data-title='Acciones' class="text-center" -->
-                                                                    <! /td-->
-
-
+                                                                <td data-title="Acciones" class="text-center">
+                                                                    <a onclick="editar(<?php echo "'" . $art['dep_cod'] . "_" . /*$art['dep_descri']*/ $art['dep_cod']. "'"; ?>)" class="btn btn-warning btn-sm" role="buttom" data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">
+                                                                        <i class="fa fa-edit"></i>
+                                                                    </a>
+                                                                    <a onclick="borrar(<?php echo "'" . $art['dep_cod'] . "_" . $art['dep_cod'] . "'"; ?>)" class="btn btn-danger btn-sm" role="buttom" data-title="Borrar" rel="tooltip" data-toggle="modal" data-target="#borrar">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </a>
+                                                                </td>
                                                             </tr>
                                                         <?php } ?>
                                                     </tbody>
@@ -114,6 +118,39 @@
         </div>
         <?php require 'menu/footer_lte.ctp'; ?>
         <!--ARCHIVOS JS-->
+
+        <!-- MODAL EDITAR -->
+        <div class="modal fade" id="editar" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
+                        <h4 class="modal-title"><i class="fa fa-edit"></i> <strong>Editar Deposito</strong></h4>
+                    </div>
+                    <form action="sucursal_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                        <input type="hidden" name="accion" value="2">
+                        <input type="hidden" name="vdep_cod" id="cod" value="0">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">Descripción:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="vdep_descri" id="descri" class="form-control" required="" autofocus="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" data-dismiss="modal" class="btn btn-default pull-left">
+                                <i class="fa fa-remove"></i> Cerrar</button>
+                            <button type="submit" class="btn btn-warning pull-right">
+                                <i class="fa fa-edit"></i> Actualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- FIN MODAL EDITAR -->
+
+
         <!-- MODAL BORRAR -->
         <div class="modal fade" id="borrar" role="dialog">
             <div class="modal-dialog">
@@ -135,6 +172,7 @@
             </div>
         </div>
         <!-- FIN MODAL BORRAR -->
+
     </div>
     <?php require 'menu/js_lte.ctp'; ?>
     <!--ARCHIVOS JS-->
@@ -146,7 +184,7 @@
     <script>
         function borrar(datos) {
             var dat = datos.split("_");
-            $('#si').attr('href', 'deposito_control.php?vart_cod=' + dat[0] + '&vart_descri=' + dat[1] + '&accion=3');
+            $('#si').attr('href', 'deposito_control.php?vdep_cod=' + dat[0] + '&vdep_cod=' + dat[1] + '&accion=3');
             $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> \n\
             Desea borrrar el deposito <strong>' + dat[1] + '</strong>?');
         }

@@ -91,10 +91,10 @@
 
                                                                 <td data-title="Acciones" class="text-center">
 
-                                                                    <a onclick="editar(<?php echo "'" . $cargo['prv_ruc'] . "_" . $cargo['prv_razonsocial'] . "'"; ?>)" class="btn btn-warning btn-sm" role="buttom" data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">
+                                                                    <a onclick="editar(<?php echo "'" . $cargo['prv_ruc'] . "_" . $cargo['prv_razonsocial'] . "_" . $cargo['prv_direccion'] . "_" . $cargo['prv_telefono'] . "'"; ?>)" class="btn btn-warning btn-sm" role="buttom" data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">
                                                                         <i class="fa fa-edit"></i>
                                                                     </a>
-                                                                    <a onclick="borrar(<?php echo "'" . $cargo['prv_ruc'] . "_" . $cargo['prv_ruc'] . "'"; ?>)" class="btn btn-danger btn-sm" role="buttom" data-title="Borrar" rel="tooltip" data-toggle="modal" data-target="#borrar">
+                                                                    <a onclick="borrar(<?php echo "'" . $cargo['prv_cod'] . "_" . $cargo['prv_cod'] . "'"; ?>)" class="btn btn-danger btn-sm" role="buttom" data-title="Borrar" rel="tooltip" data-toggle="modal" data-target="#borrar">
                                                                         <i class="fa fa-trash"></i>
                                                                     </a>
 
@@ -306,13 +306,14 @@
     <script>
         function editar(datos) {
             var dat = datos.split("_");
-            $("#cod").val(dat[0]);
+          $("#cod").val(dat[0]);
             $("#descri").val(dat[1]);
         };
 
         function borrar(datos) {
             var dat = datos.split("_");
-            $('#si').attr('href', 'proveedor_control.php? vprv_ruc =' + dat[0] + '&prv_ruc=' +  dat[1] + '&accion=3');
+          //  $('#si').attr('href', 'proveedor_control.php? vprv_ruc =' + dat[0] + '&prv_ruc=' +  dat[1] + '&accion=3');
+            $('#si').attr('href', 'proveedor_control.php? vprv_cod =' + dat[0] + '&vprv_cod=' +  dat[1] + '&accion=3');
             $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> \n\
             Desea borrrar la proveedor <strong>' + dat[1] + '</strong>?');
         }
