@@ -36,7 +36,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <form action="pedcomrpas_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                            <form action="pedcompras_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                 <?php $pedidos = consultas::get_datos("select * from v_pedido_cabcompra where ped_com =" . $_REQUEST['vped_com']); ?>
                                 <div class="box-body">
                                     <input type="hidden" name="accion" value="2" />
@@ -52,7 +52,7 @@
                                             <div class="input-group">
                                                 <?php $clientes = consultas::get_datos("select prv_cod,prv_ruc,(prv_razonsocial) as nombres"
                                                     . " from proveedor order by prv_cod=".$pedidos[0]["prv_cod"]." desc"); ?>
-                                                <select class="form-control select2" name="vcli_cod" required="">
+                                                <select class="form-control select2" name="vprv_cod" required="">
                                                     <!--option value="">Seleccione un Proveedor</option-->
                                                     <?php foreach ($clientes as $cliente) { ?>
                                                         <option value="<?php echo $cliente['prv_cod']; ?>"><?php echo "(" . $cliente['prv_ruc'] . ") " . $cliente['nombres']; ?></option>

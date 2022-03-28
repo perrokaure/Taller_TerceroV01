@@ -39,7 +39,7 @@
                             <form action="pedcompras_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                 <div class="box-body">
                                     <input type="hidden" name="accion" value="1" />
-                                    <input type="hidden" name="Vped_com" value="0" />
+                                    <input type="hidden" name="vped_com" value="0" />
                                     <div class="row">
 
                                         <?php $fecha = consultas::get_datos("select current_date as fecha"); ?>
@@ -53,7 +53,7 @@
                                             <div class="input-group">
                                                 <?php $clientes = consultas::get_datos("select prv_cod,prv_ruc,(prv_razonsocial) as nombres"
                                                     . " from proveedor order by prv_razonsocial"); ?>
-                                                <select class="form-control select2" name="vcli_cod" required="">
+                                                <select class="form-control select2" name="vprv_cod" required="">
                                                     <option value="">Seleccione un Proveedor</option>
                                                     <?php foreach ($clientes as $cliente) { ?>
                                                         <option value="<?php echo $cliente['prv_cod']; ?>"><?php echo "(" . $cliente['prv_ruc'] . ") " . $cliente['nombres']; ?></option>

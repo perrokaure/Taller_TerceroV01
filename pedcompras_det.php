@@ -41,7 +41,7 @@
                                 <i class="ion ion-plus"></i>
                                 <h3 class="box-title">Agregar Detalle Compras</h3>
                                 <div class="box-tools">
-                                    <a href="pedventas_index.php" class="btn btn-primary btn-sm pull-right" data-title='Volver' rel='tooltip' data-placement='top'><i class="fa fa-arrow-left"></i></a>
+                                    <a href="pedcompras_index.php" class="btn btn-primary btn-sm pull-right" data-title='Volver' rel='tooltip' data-placement='top'><i class="fa fa-arrow-left"></i></a>
                                 </div>
                             </div>
                             <div class="box-body">
@@ -145,7 +145,7 @@
                                 <!-- INICIO FORMULARIO AGREGAR-->
                                 <div class="row">
                                     <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                                        <form action="pedventas_dcontrol.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                        <form action="pedcompras_dcontrol.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                             <input type="hidden" name="accion" value="1">
                                             <input type="hidden" name="vped_com" value="<?php echo $pedidos[0]['ped_com']; ?>">
                                             <div class="box-body">
@@ -259,7 +259,7 @@
         function editar(ped, art, dep) {
             $.ajax({
                 type: "GET",
-                url: "/lp3/pedventas_dedit.php?vped_com=" + ped + "&vart_cod=" + art + "&vdep_cod=" + dep,
+                url: "/lp3/pedcompras_dedit.php?vped_com=" + ped + "&vart_cod=" + art + "&vdep_cod=" + dep,
                 cache: false,
                 beforeSend: function() {
                     $("#detalles").html('<img src="img/loader.gif"/><strong>Cargando...</strong>')
@@ -272,7 +272,7 @@
 
         function borrar(datos) {
             var dat = datos.split('_');
-            $('#si').attr('href', 'pedventas_dcontrol.php?vped_com=' + dat[0] + '&vart_cod=' + dat[1] + '&vdep_cod=' + dat[2] + '&accion=3');
+            $('#si').attr('href', 'pedvcompras_dcontrol.php?vped_com=' + dat[0] + '&vart_cod=' + dat[1] + '&vdep_cod=' + dat[2] + '&accion=3');
             $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> Desea quitar el articulo \n\
     <strong>' + dat[3] + '</strong> ?');
         }
