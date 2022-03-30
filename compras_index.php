@@ -41,7 +41,7 @@
                                 <i class="fa fa-money"></i>
                                 <h3 class="box-title">Compras</h3>
                                 <div class="box-tools">
-                                    <a href="ventas_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'><i class="fa fa-plus"></i> AGREGAR</a>
+                                    <a href="compras_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'><i class="fa fa-plus"></i> AGREGAR</a>
                                 </div>
                             </div>
                             <div class="box-body">
@@ -63,16 +63,16 @@
                                         </form>
                                         <?php
                                         //consulta a la tabla marca
-                                        $ventas = consultas::get_datos("select * from v_ventas where id_sucursal = " . $_SESSION['id_sucursal'] . " and ven_cod::varchar ilike '%" . (isset($_REQUEST['buscar']) ? $_REQUEST['buscar'] : "") . "%' order by ven_cod desc");
+                                        $compras = consultas::get_datos("select * from v_compras where id_sucursal = " . $_SESSION['id_sucursal'] . " and com_cod::varchar ilike '%" . (isset($_REQUEST['buscar']) ? $_REQUEST['buscar'] : "") . "%' order by com_cod desc");
                                         //var_dump($marcas);
-                                        if (!empty($ventas)) { ?>
+                                        if (!empty($compras)) { ?>
                                             <div class="table-responsive">
                                                 <table class="table table-condensed table-striped table-hover">
                                                     <thead>
                                                         <tr>
-                                                            <th>N° Venta</th>
+                                                            <th>N° Compra</th>
                                                             <th>Fecha</th>
-                                                            <th>Cliente</th>
+                                                            <th>proveedor</th>
                                                             <th>Condición</th>
                                                             <th>Total</th>
                                                             <th>Estado</th>
@@ -80,29 +80,29 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php foreach ($ventas as $ven) { ?>
+                                                        <?php foreach ($compras as $ven) { ?>
                                                             <tr>
-                                                                <td data-title='N° Venta'><?php echo $ven['ven_cod']; ?></td>
-                                                                <td data-title='Fecha'><?php echo $ven['ven_fecha']; ?></td>
-                                                                <td data-title='Cliente'><?php echo $ven['cliente']; ?></td>
-                                                                <td data-title='Condición'><?php echo $ven['tipo_venta']; ?></td>
-                                                                <td data-title='Total'><?php echo number_format($ven['ven_total'], 0, ",", "."); ?></td>
-                                                                <td data-title='Estado'><?php echo $ven['ven_estado']; ?></td>
+                                                                <td data-title='N° Compra'><?php echo $ven['com_cod']; ?></td>
+                                                                <td data-title='Fecha'><?php echo $ven['com_fecha']; ?></td>
+                                                                <td data-title='proveedor'><?php echo $ven['proveedor']; ?></td>
+                                                                <td data-title='Condición'><?php echo $ven['tipo_compra']; ?></td>
+                                                                <td data-title='Total'><?php echo number_format($ven['com_total'], 0, ",", "."); ?></td>
+                                                                <td data-title='Estado'><?php echo $ven['com_estado']; ?></td>
                                                                 <td data-title='Acciones' class="text-center">
-                                                                    <?php if ($ven['ven_estado'] == "PENDIENTE") { ?>
-                                                                        <a onclick="confirmar(<?php echo "'" . $ven['ven_cod'] . "_" . $ven['cliente'] . "_" . $ven['ven_fecha'] . "'" ?>)" class="btn btn-info btn-sm" role='button' data-title='Confirmar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#confirmar">
+                                                                    <?php if ($ven['com_estado'] == "PENDIENTE") { ?>
+                                                                        <a onclick="confirmar(<?php echo "'" . $ven['com_cod'] . "_" . $ven['proveedor'] . "_" . $ven['com_fecha'] . "'" ?>)" class="btn btn-info btn-sm" role='button' data-title='Confirmar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#confirmar">
                                                                             <span class="glyphicon glyphicon-check"></span>
                                                                         </a>
-                                                                        <a href="ventas_det.php?vven_cod=<?php echo $ven['ven_cod']; ?>" class="btn btn-success btn-sm" role='button' data-title='Detalles' rel='tooltip' data-placement='top'>
+                                                                        <a href="compras_det.php?vcom_cod=<?php echo $ven['com_cod']; ?>" class="btn btn-success btn-sm" role='button' data-title='Detalles' rel='tooltip' data-placement='top'>
                                                                             <span class="glyphicon glyphicon-list"></span>
                                                                         </a>
                                                                     <?php } ?>
-                                                                    <?php if ($ven['ven_estado'] == "PENDIENTE" || $ven['ven_estado'] == "CONFIRMADO") { ?>
-                                                                        <a onclick="anular(<?php echo "'" . $ven['ven_cod'] . "_" . $ven['cliente'] . "_" . $ven['ven_fecha'] . "'" ?>)" class="btn btn-danger btn-sm" role='button' data-title='Anular' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#anular">
+                                                                    <?php if ($ven['com_estado'] == "PENDIENTE" || $ven['com_estado'] == "CONFIRMADO") { ?>
+                                                                        <a onclick="anular(<?php echo "'" . $ven['com_cod'] . "_" . $ven['proveedor'] . "_" . $ven['com_fecha'] . "'" ?>)" class="btn btn-danger btn-sm" role='button' data-title='Anular' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#anular">
                                                                             <span class="glyphicon glyphicon-remove"></span>
                                                                         </a>
                                                                     <?php } ?>
-                                                                    <a href="ventas_print.php?vven_cod=<?php echo $ven['ven_cod']; ?>" class="btn btn-default btn-sm" role='button' data-title='Imprimir' rel='tooltip' data-placement='top' target="print">
+                                                                    <a href="compras_print.php?vcom_cod=<?php echo $ven['com_cod']; ?>" class="btn btn-default btn-sm" role='button' data-title='Imprimir' rel='tooltip' data-placement='top' target="print">
                                                                         <span class="glyphicon glyphicon-print"></span>
                                                                     </a>
                                                                 </td>
@@ -114,7 +114,7 @@
                                         <?php } else { ?>
                                             <div class="alert alert-info flat">
                                                 <span class="glyphicon glyphicon-info-sign"></span>
-                                                No se han registrado ventas a la fecha...
+                                                No se han registrado compras a la fecha...
                                             </div>
                                         <?php }
                                         ?>
@@ -183,16 +183,16 @@
     <script>
         function anular(datos) {
             var dat = datos.split('_');
-            $('#si').attr('href', 'ventas_control.php?vven_cod=' + dat[0] + '&accion=3');
+            $('#si').attr('href', 'compras_control.php?vcom_cod=' + dat[0] + '&accion=3');
             $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> Desea anular la \n\
-                venta N° <strong>' + dat[0] + '</strong> de fecha <strong>' + dat[2] + '</strong> del cliente <strong>' + dat[1] + '</strong> ?');
+                venta N° <strong>' + dat[0] + '</strong> de fecha <strong>' + dat[2] + '</strong> del proveedor <strong>' + dat[1] + '</strong> ?');
         };
 
         function confirmar(datos) {
             var dat = datos.split('_');
-            $('#sic').attr('href', 'ventas_control.php?vven_cod=' + dat[0] + '&accion=2');
+            $('#sic').attr('href', 'compras_control.php?vcom_cod=' + dat[0] + '&accion=2');
             $('#confirmacionc').html('<span class="glyphicon glyphicon-warning-sign"></span> Desea confirmar la \n\
-                venta N° <strong>' + dat[0] + '</strong> de fecha <strong>' + dat[2] + '</strong> del cliente <strong>' + dat[1] + '</strong> ?');
+                venta N° <strong>' + dat[0] + '</strong> de fecha <strong>' + dat[2] + '</strong> del proveedor <strong>' + dat[1] + '</strong> ?');
         }
     </script>
 </body>
