@@ -31,18 +31,18 @@
                                 ?>
                             </div>
                             <?php }
-                                $ventas = consultas::get_datos("select * from v_ventas where ven_cod=".$_REQUEST['vven_cod']);
+                                $ventas = consultas::get_datos("select * from v_compras where com_cod=".$_REQUEST['vcom_cod']);
                             ?>
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <i class="ion ion-plus"></i><i class="fa fa-list"></i>
                                     <h3 class="box-title">Agregar Detalle Venta</h3>
                                     <div class="box-tools">
-                                        <a onclick="confirmar(<?php echo "'".$ventas[0]['ven_cod']."_".$ventas[0]['cliente']."_".$ventas[0]['ven_fecha']."'"?>)" class="btn btn-success btn-sm" role='button'
+                                        <a onclick="confirmar(<?php echo "'".$ventas[0]['com_cod']."_".$ventas[0]['proveedor']."_".$ventas[0]['com_fecha']."'"?>)" class="btn btn-success btn-sm" role='button'
                                         data-title='Confirmar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#confirmar">
                                         <span class="glyphicon glyphicon-check"></span> CONFIRMAR
                                         </a>
-                                        <a href="ventas_index.php" class="btn btn-primary btn-sm" data-title='Volver' rel='tooltip' data-placement='top'><i class="fa fa-arrow-left"></i> VOLVER</a>
+                                        <a href="compras_index.php" class="btn btn-primary btn-sm" data-title='Volver' rel='tooltip' data-placement='top'><i class="fa fa-arrow-left"></i> VOLVER</a>
                                     </div>
                                 </div>
                                 <div class="box-body">
@@ -58,7 +58,7 @@
                                                         <tr>
                                                             <th>N° Venta</th>
                                                             <th>Fecha</th>
-                                                            <th>Cliente</th>
+                                                            <th>proveedor</th>
                                                             <th>Condición</th>
                                                             <th>Total</th>
                                                             <th>Estado</th>
@@ -67,12 +67,12 @@
                                                     <tbody>
                                                         <?php foreach ($ventas as $ven) { ?>
                                                         <tr>
-                                                            <td data-title='N° Venta'><?php echo $ven['ven_cod'];?></td>
-                                                            <td data-title='Fecha'><?php echo $ven['ven_fecha'];?></td>
-                                                            <td data-title='Cliente'><?php echo $ven['cliente'];?></td>
+                                                            <td data-title='N° Venta'><?php echo $ven['com_cod'];?></td>
+                                                            <td data-title='Fecha'><?php echo $ven['com_fecha'];?></td>
+                                                            <td data-title='Proveedor'><?php echo $ven['proveedor'];?></td>
                                                             <td data-title='Condición'><?php echo $ven['tipo_venta'];?></td>
-                                                            <td data-title='Total'><?php echo number_format($ven['ven_total'],0,",",".");?></td>
-                                                            <td data-title='Estado'><?php echo $ven['ven_estado'];?></td>
+                                                            <td data-title='Total'><?php echo number_format($ven['com_total'],0,",",".");?></td>
+                                                            <td data-title='Estado'><?php echo $ven['com_estado'];?></td>
                                                         </tr>
                                                         <?php } ?>
                                                     </tbody>
@@ -89,8 +89,8 @@
                                     </div>
                                     <!-- FIN CABECERA-->
                                     <!-- INCICIO ITEMS PEDIDOS-->
-                                   <?php $pedidosdet = consultas::get_datos("select * from v_detalle_pedventa where ped_cod=".$ventas[0]['ped_cod']
-                                    ." and art_cod not in (select art_cod from detalle_ventas where ven_cod=".$ventas[0]['ven_cod'].")");
+                                   <?php $pedidosdet = consultas::get_datos("select * from v_detalle_pedcompra where ped_cod=".$ventas[0]['ped_cod']
+                                    ." and art_cod not in (select art_cod from detalle_ventas where com_cod=".$ventas[0]['com_cod'].")");
                                     if (!empty($pedidosdet)) { ?>
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -123,7 +123,7 @@
                                                             <td data-title="Impuesto"><?php echo $peddet['tipo_descri'];?></td>
                                                             <td data-title="Precio"><?php echo number_format($peddet['subtotal'],0,",",".");?></td>
                                                             <td class="text-center">
-                                                                <a onclick="add(<?php echo $peddet['ped_cod'];?>,<?php echo $ventas[0]['ven_cod'];?>,<?php echo $peddet['art_cod'];?>,<?php echo $peddet['dep_cod'];?>)" class="btn btn-success btn-sm" role='button'
+                                                                <a onclick="add(<?php echo $peddet['ped_cod'];?>,<?php echo $ventas[0]['com_cod'];?>,<?php echo $peddet['art_cod'];?>,<?php echo $peddet['dep_cod'];?>)" class="btn btn-success btn-sm" role='button'
                                                                    data-title='Agregar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#editar">
                                                                     <span class="glyphicon glyphicon-plus"></span>
                                                                 </a>
@@ -140,7 +140,7 @@
                                     <!-- INCICIO DETALLES-->
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <?php $detalles = consultas::get_datos("select * from v_detalle_ventas where ven_cod=".$ventas[0]['ven_cod']);
+                                            <?php $detalles = consultas::get_datos("select * from v_detalle_compras where com_cod=".$ventas[0]['com_cod']);
                                                  if (!empty($detalles)) { ?>
                                             <div class="box-header">
                                                 <i class="fa fa-list"></i>
@@ -171,11 +171,11 @@
                                                             <td data-title="Impuesto"><?php echo $det['tipo_descri'];?></td>
                                                             <td data-title="Precio"><?php echo number_format($det['subtotal'],0,",",".");?></td>
                                                             <td class="text-center">
-                                                                <a onclick="editar(<?php echo $det['ven_cod'];?>,<?php echo $det['art_cod'];?>,<?php echo $det['dep_cod'];?>)" class="btn btn-warning btn-sm" role='button'
+                                                                <a onclick="editar(<?php echo $det['com_cod'];?>,<?php echo $det['art_cod'];?>,<?php echo $det['dep_cod'];?>)" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#editar">
                                                                     <span class="glyphicon glyphicon-edit"></span>
                                                                 </a>
-                                                                <a onclick="borrar(<?php echo "'".$det['ven_cod']."_".$det['art_cod']."_".$det['dep_cod']."_".$det['art_descri']." ".$det['mar_descri']."'"?>)" class="btn btn-danger btn-sm" role='button'
+                                                                <a onclick="borrar(<?php echo "'".$det['com_cod']."_".$det['art_cod']."_".$det['dep_cod']."_".$det['art_descri']." ".$det['mar_descri']."'"?>)" class="btn btn-danger btn-sm" role='button'
                                                                    data-title='Borrar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#borrar">
                                                                     <span class="glyphicon glyphicon-trash"></span>
                                                                 </a>
@@ -187,7 +187,7 @@
                                             </div>
                                             <?php }else{ ?>
                                             <div class="alert alert-info flat">
-                                                <i class="fa fa-info-circle"></i> La venta aún no tiene detalles cargados...
+                                                <i class="fa fa-info-circle"></i> La compra aún no tiene detalles cargados...
                                             </div>
                                             <?php } ?>
                                         </div>
@@ -198,7 +198,7 @@
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                             <form action="ventas_dcontrol.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                                 <input type="hidden" name="accion" value="1">
-                                                <input type="hidden" name="vven_cod" value="<?php echo $ventas[0]['ven_cod'];?>">
+                                                <input type="hidden" name="vcom_cod" value="<?php echo $ventas[0]['com_cod'];?>">
                                                 <div class="box-body">
                                                     <!-- AGREGAR LISTA DESPLEGABLE DEPOSITO -->
                                                     <div class="form-group">
@@ -326,7 +326,7 @@
         function editar(ven,art,dep){
             $.ajax({
                 type    : "GET",
-                url     : "/lp3/ventas_dedit.php?vven_cod="+ven+"&vart_cod="+art+"&vdep_cod="+dep,
+                url     : "/lp3/compras_dedit.php?vcom_cod="+ven+"&vart_cod="+art+"&vdep_cod="+dep,
                 cache   : false,
                 beforeSend:function(){
                    $("#detalles").html('<img src="img/loader.gif"/><strong>Cargando...</strong>')
@@ -338,20 +338,20 @@
         };
         function borrar(datos){
             var dat = datos.split('_');
-            $('#si').attr('href','ventas_dcontrol.php?vven_cod='+dat[0]+'&vart_cod='+dat[1]+'&vdep_cod='+dat[2]+'&accion=3');
+            $('#si').attr('href','compras_dcontrol.php?vcom_cod='+dat[0]+'&vart_cod='+dat[1]+'&vdep_cod='+dat[2]+'&accion=3');
             $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> Desea quitar el articulo \n\
     <strong>'+dat[3]+'</strong> ?');
         };
             function confirmar(datos){
                 var dat = datos.split('_');
-                $('#sic').attr('href','ventas_control.php?vven_cod='+dat[0]+'&accion=2');
+                $('#sic').attr('href','compras_control.php?vcom_cod='+dat[0]+'&accion=2');
                 $('#confirmacionc').html('<span class="glyphicon glyphicon-warning-sign"></span> Desea confirmar la \n\
-                venta N° <strong>'+dat[0]+'</strong> de fecha <strong>'+dat[2]+'</strong> del cliente <strong>'+dat[1]+'</strong> ?');
+                venta N° <strong>'+dat[0]+'</strong> de fecha <strong>'+dat[2]+'</strong> del proveedor <strong>'+dat[1]+'</strong> ?');
             };
         function add(ped,ven,art,dep){
             $.ajax({
                 type    : "GET",
-                url     : "/lp3/ventas_dadd.php?vped_cod="+ped+"&vven_cod="+ven+"&vart_cod="+art+"&vdep_cod="+dep,
+                url     : "/lp3/compras_dadd.php?vped_cod="+ped+"&vcom_cod="+ven+"&vart_cod="+art+"&vdep_cod="+dep,
                 cache   : false,
                 beforeSend:function(){
                    $("#detalles").html('<img src="img/loader.gif"/><strong>Cargando...</strong>')
