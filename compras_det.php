@@ -31,14 +31,14 @@
                                 ?>
                             </div>
                             <?php }
-                                $ventas = consultas::get_datos("select * from v_compras where com_cod=".$_REQUEST['vcom_cod']);
+                                $compras = consultas::get_datos("select * from v_compras where com_cod=".$_REQUEST['vcom_cod']);
                             ?>
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <i class="ion ion-plus"></i><i class="fa fa-list"></i>
                                     <h3 class="box-title">Agregar Detalle Venta</h3>
                                     <div class="box-tools">
-                                        <a onclick="confirmar(<?php echo "'".$ventas[0]['com_cod']."_".$ventas[0]['proveedor']."_".$ventas[0]['com_fecha']."'"?>)" class="btn btn-success btn-sm" role='button'
+                                        <a onclick="confirmar(<?php echo "'".$compras[0]['com_cod']."_".$compras[0]['proveedor']."_".$compras[0]['com_fecha']."'"?>)" class="btn btn-success btn-sm" role='button'
                                         data-title='Confirmar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#confirmar">
                                         <span class="glyphicon glyphicon-check"></span> CONFIRMAR
                                         </a>
@@ -51,12 +51,12 @@
                                             <?php
                                             //consulta a la tabla marca
                                             //var_dump($marcas);
-                                            if (!empty($ventas)) { ?>
+                                            if (!empty($compras)) { ?>
                                             <div class="table-responsive">
                                                 <table class="table table-condensed table-striped table-hover">
                                                     <thead>
                                                         <tr>
-                                                            <th>N° Venta</th>
+                                                            <th>N° Compra</th>
                                                             <th>Fecha</th>
                                                             <th>proveedor</th>
                                                             <th>Condición</th>
@@ -65,12 +65,12 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php foreach ($ventas as $ven) { ?>
+                                                        <?php foreach ($compras as $ven) { ?>
                                                         <tr>
-                                                            <td data-title='N° Venta'><?php echo $ven['com_cod'];?></td>
+                                                            <td data-title='N° Compra'><?php echo $ven['com_cod'];?></td>
                                                             <td data-title='Fecha'><?php echo $ven['com_fecha'];?></td>
-                                                            <td data-title='Proveedor'><?php echo $ven['proveedor'];?></td>
-                                                            <td data-title='Condición'><?php echo $ven['tipo_venta'];?></td>
+                                                            <td data-title='proveedor'><?php echo $ven['proveedor'];?></td>
+                                                            <td data-title='Condición'><?php echo $ven['tipo_compra'];?></td>
                                                             <td data-title='Total'><?php echo number_format($ven['com_total'],0,",",".");?></td>
                                                             <td data-title='Estado'><?php echo $ven['com_estado'];?></td>
                                                         </tr>
@@ -89,14 +89,14 @@
                                     </div>
                                     <!-- FIN CABECERA-->
                                     <!-- INCICIO ITEMS PEDIDOS-->
-                                   <?php $pedidosdet = consultas::get_datos("select * from v_detalle_pedcompra where ped_cod=".$ventas[0]['ped_cod']
-                                    ." and art_cod not in (select art_cod from detalle_ventas where com_cod=".$ventas[0]['com_cod'].")");
+                                   <?php $pedidosdet = consultas::get_datos("select * from v_detalle_pedcompra where ped_com=".$compras[0]['ped_com']
+                                    ." and art_cod not in (select art_cod from detalle_compra where com_cod=".$compras[0]['com_cod'].")");
                                     if (!empty($pedidosdet)) { ?>
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="box-header">
                                                 <i class="fa fa-list"></i>
-                                                <h3 class="box-title">Detalle Items del Pedido N° <?php echo $ventas[0]['ped_cod'];?></h3>
+                                                <h3 class="box-title">Detalle Items del Pedido N° <?php echo $compras[0]['ped_com'];?></h3>
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="table table-condensed table-striped table-hover">
@@ -123,7 +123,7 @@
                                                             <td data-title="Impuesto"><?php echo $peddet['tipo_descri'];?></td>
                                                             <td data-title="Precio"><?php echo number_format($peddet['subtotal'],0,",",".");?></td>
                                                             <td class="text-center">
-                                                                <a onclick="add(<?php echo $peddet['ped_cod'];?>,<?php echo $ventas[0]['com_cod'];?>,<?php echo $peddet['art_cod'];?>,<?php echo $peddet['dep_cod'];?>)" class="btn btn-success btn-sm" role='button'
+                                                                <a onclick="add(<?php echo $peddet['ped_com'];?>,<?php echo $compras[0]['com_cod'];?>,<?php echo $peddet['art_cod'];?>,<?php echo $peddet['dep_cod'];?>)" class="btn btn-success btn-sm" role='button'
                                                                    data-title='Agregar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#editar">
                                                                     <span class="glyphicon glyphicon-plus"></span>
                                                                 </a>
@@ -140,7 +140,7 @@
                                     <!-- INCICIO DETALLES-->
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <?php $detalles = consultas::get_datos("select * from v_detalle_compras where com_cod=".$ventas[0]['com_cod']);
+                                            <?php $detalles = consultas::get_datos("select * from v_detalle_compras where com_cod=".$compras[0]['com_cod']);
                                                  if (!empty($detalles)) { ?>
                                             <div class="box-header">
                                                 <i class="fa fa-list"></i>
@@ -166,8 +166,8 @@
                                                             <td data-title="#"><?php echo $det['art_cod'];?></td>
                                                             <td data-title="Descripción"><?php echo $det['art_descri']." ".$det['mar_descri'];?></td>
                                                             <td data-title="Deposito"><?php echo $det['dep_descri'];?></td>
-                                                            <td data-title="Cantidad"><?php echo $det['ven_cant'];?></td>
-                                                            <td data-title="Precio"><?php echo number_format($det['ven_precio'],0,",",".");?></td>
+                                                            <td data-title="Cantidad"><?php echo $det['com_cant'];?></td>
+                                                            <td data-title="Precio"><?php echo number_format($det['com_precio'],0,",",".");?></td>
                                                             <td data-title="Impuesto"><?php echo $det['tipo_descri'];?></td>
                                                             <td data-title="Precio"><?php echo number_format($det['subtotal'],0,",",".");?></td>
                                                             <td class="text-center">
@@ -187,7 +187,7 @@
                                             </div>
                                             <?php }else{ ?>
                                             <div class="alert alert-info flat">
-                                                <i class="fa fa-info-circle"></i> La compra aún no tiene detalles cargados...
+                                                <i class="fa fa-info-circle"></i> La venta aún no tiene detalles cargados...
                                             </div>
                                             <?php } ?>
                                         </div>
@@ -196,9 +196,9 @@
                                     <!-- INICIO FORMULARIO AGREGAR-->
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                                            <form action="ventas_dcontrol.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                            <form action="compras_dcontrol.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                                 <input type="hidden" name="accion" value="1">
-                                                <input type="hidden" name="vcom_cod" value="<?php echo $ventas[0]['com_cod'];?>">
+                                                <input type="hidden" name="vcom_cod" value="<?php echo $compras[0]['com_cod'];?>">
                                                 <div class="box-body">
                                                     <!-- AGREGAR LISTA DESPLEGABLE DEPOSITO -->
                                                     <div class="form-group">
@@ -231,13 +231,13 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-lg-2">Cantidad:</label>
                                                         <div class="col-lg-3 col-md-4 col-sm-4">
-                                                            <input type="number" class="form-control" name="vven_cant" min="1" value="1" required=""/>
+                                                            <input type="number" class="form-control" name="vcom_cant" min="1" value="1" required=""/>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="control-label col-lg-2">Precio:</label>
                                                         <div class="col-lg-3 col-md-4 col-sm-4">
-                                                            <input type="number" class="form-control" name="vven_precio" min="1" required="" id="vprecio"/>
+                                                            <input type="number" class="form-control" name="vcom_precio" min="1" required="" id="vprecio"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -351,7 +351,7 @@
         function add(ped,ven,art,dep){
             $.ajax({
                 type    : "GET",
-                url     : "/lp3/compras_dadd.php?vped_cod="+ped+"&vcom_cod="+ven+"&vart_cod="+art+"&vdep_cod="+dep,
+                url     : "/lp3/compras_dadd.php?vped_com="+ped+"&vcom_cod="+ven+"&vart_cod="+art+"&vdep_cod="+dep,
                 cache   : false,
                 beforeSend:function(){
                    $("#detalles").html('<img src="img/loader.gif"/><strong>Cargando...</strong>')

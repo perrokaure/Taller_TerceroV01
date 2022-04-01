@@ -8,7 +8,7 @@ $detalles = consultas::get_datos("select * from v_detalle_compra s where com_cod
     <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
     <h4 class="modal-title"><i class="fa fa-edit"></i> <strong>Editar Detalle compra </strong></h4>
 </div>
-<form action="compra s_dcontrol.php" method="post" accept-charset="utf-8" class="form-horizontal">
+<form action="compras_dcontrol.php" method="post" accept-charset="utf-8" class="form-horizontal">
     <input type="hidden" name="accion" value="2">
     <input type="hidden" name="vcom_cod" value="<?php echo $detalles[0]['com_cod']?>">
     <input type="hidden" name="vdep_cod" value="<?php echo $detalles[0]['dep_cod']?>">

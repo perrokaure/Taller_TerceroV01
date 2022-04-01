@@ -2,13 +2,14 @@
 require 'clases/conexion.php';
 session_start();
 
-$sql="select sp_ventas(".$_REQUEST['accion'].",
-".$_REQUEST['vven_cod'].", 
-".$_SESSION['emp_cod'].", 
-".(!empty($_REQUEST['vcli_cod'])?$_REQUEST['vcli_cod']:"0").", 
-".(!empty($_REQUEST['vtipo_venta'])? "'".$_REQUEST['vtipo_venta']."'":"null").", 
-".(!empty($_REQUEST['vcan_cuota'])?$_REQUEST['vcan_cuota']:"0").", 
-".(!empty($_REQUEST['vven_plazo'])?$_REQUEST['vven_plazo']:"0").", 
+$sql="select sp_ventas(
+  ".$_REQUEST['accion'].",
+".$_REQUEST['vven_cod'].",
+".$_SESSION['emp_cod'].",
+".(!empty($_REQUEST['vcli_cod'])?$_REQUEST['vcli_cod']:"0").",
+".(!empty($_REQUEST['vtipo_venta'])? "'".$_REQUEST['vtipo_venta']."'":"null").",
+".(!empty($_REQUEST['vcan_cuota'])?$_REQUEST['vcan_cuota']:"0").",
+".(!empty($_REQUEST['vven_plazo'])?$_REQUEST['vven_plazo']:"0").",
 ".$_SESSION['id_sucursal'].",".(!empty($_REQUEST['vped_cod'])?$_REQUEST['vped_cod']:"0").") as resul";
 
 $resultado = consultas::get_datos($sql);
@@ -19,5 +20,5 @@ if ($resultado[0]['resul']!=null) {
     header("location:".$valor[1]);
 }else{
     $_SESSION['mensaje'] ="Error:".$sql;
-    header("location:ventas_index.php");    
+    header("location:ventas_index.php");
 }
