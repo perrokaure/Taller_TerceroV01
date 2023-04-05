@@ -41,10 +41,10 @@
                                 <div class="box-body">
                                     <div class="form-group">
                                         <input type="hidden" name="accion" value="1" />
-                                        <input type="hidden" name="vdep_cod" value="0">
+                                        <input type="hidden" name="vddps_cod" value="0">
                                         <label class="control-label col-sm-2">Descripción:</label>
                                         <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <input type="text" name="vdep_descri" class="form-control" required="" />
+                                            <input type="text" name="vdsp_descripcion" class="form-control" required="" />
                                         </div>
                                         <!--div class="form-group">
                                             <label class="control-label col-sm-2">Descripción:</label>
@@ -60,13 +60,13 @@
                                         <label class="control-label col-lg-2">Sucursal:</label>
                                         <div class="col-lg-5 col-md-5 col-sm-5">
                                             <div class="input-group">
-                                              <?php $marcas = consultas::get_datos("select * from Sucursal order by suc_descri"); ?>
-                                              <select class="form-control select2" name="vid_sucursal" required="">
-                                                  <option value="">Seleccione una marca</option>
-                                                  <?php foreach ($marcas as $marca) { ?>
-                                                      <option value="<?php echo $marca['id_sucursal']; ?>"><?php echo $marca['suc_descri']; ?></option>
-                                                  <?php } ?>
-                                              </select>
+                                                <?php $sucursales = consultas::get_datos("select * from Sucursal order by suc_descripcion"); ?>
+                                                <select class="form-control select2" name="vdpsuc_cod" required="">
+                                                    <option value="">Seleccione una sucursal</option>
+                                                    <?php foreach ($sucursales as $sucursal) { ?>
+                                                        <option value="<?php echo $sucursal['suc_cod']; ?>"><?php echo $sucursal['suc_descripcion']; ?></option>
+                                                    <?php } ?>
+                                                </select>
                                                 <span class="input-group-btn btn-flat">
                                                     <a class="btn btn-primary" data-title="Agregar Sucursal " rel="tooltip" data-placement="top" data-toggle="modal" data-target="#registrar">
                                                         <i class="fa fa-plus"></i>
@@ -75,28 +75,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- FIN LISTA DESPLEGABLE MARCA -->
-                                    <!--div class="form-group">
-                                        <label class="control-label col-sm-2">Descripción:</label>
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <input type="text" name="vart_descri" class="form-control" required="" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2">Precio Costo:</label>
-                                        <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <input type="number" name="vart_precioc" class="form-control" min="0" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2">Precio Venta:</label>
-                                        <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <input type="number" name="vart_preciov" class="form-control" min="0" />
-                                        </div>
-                                    </div-->
-                                    <!-- AGREGAR LISTA DESPLEGABLE IMPUESTO -->
-
-                                    <!-- FIN LISTA DESPLEGABLE MARCA -->
                                 </div>
                                 <div class="box-footer">
                                     <button type="reset" class="btn btn-default" data-title="Cancelar" rel="tooltip">
@@ -125,12 +103,12 @@
 
                     <form action="Sucursal_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                         <input type="hidden" name="accion" value="1">
-                        <input type="hidden" name="vid_sucursal" value="0">
+                        <input type="hidden" name="vdpsuc_cod" value="0">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label class="control-label col-sm-2">Descripción:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="vsuc_descri" class="form-control" required="" autofocus="" />
+                                    <input type="text" name="vsuc_descripcion" class="form-control" required="" autofocus="" />
                                 </div>
                             </div>
                         </div>

@@ -70,7 +70,7 @@
                                                 $valor = $_REQUEST['buscar'];
                                             }*/
 
-                                        $cargos = consultas::get_datos("Select * from sucursal where suc_descri like '%" . (isset($_REQUEST['buscar']) ? $_REQUEST['buscar'] : "") . "%'order by id_sucursal");
+                                        $cargos = consultas::get_datos("Select * from sucursal where suc_descripcion like '%" . (isset($_REQUEST['buscar']) ? $_REQUEST['buscar'] : "") . "%'order by suc_cod");
                                         if (!empty($cargos)) { ?>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered table-condensed table-striped">
@@ -83,12 +83,12 @@
                                                     <tbody>
                                                         <?php foreach ($cargos as $cargo) { ?>
                                                             <tr>
-                                                                <td data-title="Descripción"><?php echo $cargo['suc_descri']; ?></td>
+                                                                <td data-title="Descripción"><?php echo $cargo['suc_descripcion']; ?></td>
                                                                 <td data-title="Acciones" class="text-center">
-                                                                    <a onclick="editar(<?php echo "'" . $cargo['id_sucursal'] . "_" . $cargo['suc_descri'] . "'"; ?>)" class="btn btn-warning btn-sm" role="buttom" data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">
+                                                                    <a onclick="editar(<?php echo "'" . $cargo['suc_cod'] . "_" . $cargo['suc_descripcion'] . "'"; ?>)" class="btn btn-warning btn-sm" role="buttom" data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">
                                                                         <i class="fa fa-edit"></i>
                                                                     </a>
-                                                                    <a onclick="borrar(<?php echo "'" . $cargo['id_sucursal'] . "_" . $cargo['suc_descri'] . "'"; ?>)" class="btn btn-danger btn-sm" role="buttom" data-title="Borrar" rel="tooltip" data-toggle="modal" data-target="#borrar">
+                                                                    <a onclick="borrar(<?php echo "'" . $cargo['suc_cod'] . "_" . $cargo['suc_descripcion'] . "'"; ?>)" class="btn btn-danger btn-sm" role="buttom" data-title="Borrar" rel="tooltip" data-toggle="modal" data-target="#borrar">
                                                                         <i class="fa fa-trash"></i>
                                                                     </a>
                                                                 </td>
@@ -123,13 +123,20 @@
                     </div>
                     <form action="sucursal_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                         <input type="hidden" name="accion" value="1">
-                        <input type="hidden" name="vid_sucursal" value="0">
+                        <input type="hidden" name="vsuc_cod" value="0">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label class="control-label col-sm-2">Descripción:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="vsuc_descri" class="form-control" required="" autofocus="" />
+                                    <input type="text" name="vsuc_descripcion" class="form-control" required="" autofocus="" />
                                 </div>
+                                <!-- TEELONO Y NUEVAS PAUTAS -->
+                                <br>
+                                <label class="control-label col-sm-2">Telefono:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="vsuc_telefono" class="form-control" required="" autofocus="" />
+                                </div>
+                                <!-- TEELONO Y NUEVAS PAUTAS -->
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -153,12 +160,12 @@
                     </div>
                     <form action="sucursal_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                         <input type="hidden" name="accion" value="2">
-                        <input type="hidden" name="vid_sucursal" id="cod" value="0">
+                        <input type="hidden" name="vsuc_cod" id="cod" value="0">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label class="control-label col-sm-2">Descripción:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="vsuc_descri" id="descri" class="form-control" required="" autofocus="" />
+                                    <input type="text" name="vsuc_descripcion" id="descri" class="form-control" required="" autofocus="" />
                                 </div>
                             </div>
                         </div>
@@ -214,7 +221,7 @@
 
         function borrar(datos) {
             var dat = datos.split("_");
-            $('#si').attr('href', 'sucursal_control.php?vid_sucursal=' + dat[0] + '&vsuc_descri=' + dat[1] + '&accion=3');
+            $('#si').attr('href', 'sucursal_control.php?vvsuc_cod=' + dat[0] + '&vsuc_descripcion=' + dat[1] + '&accion=3');
             $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> \n\
             Desea borrrar la sucursal <strong>' + dat[1] + '</strong>?');
         }

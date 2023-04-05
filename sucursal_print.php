@@ -70,17 +70,19 @@ $pdf->SetFont('', 'B', 12);
 $pdf->SetFillColor(180, 180, 180);
 $pdf->Cell(50, 5, 'CODIGO', 1, 0, 'C', 1);
 $pdf->Cell(0, 5, 'DESCRIPCION', 1, 0, 'C', 1);
+$pdf->Cell(0, 5, 'TELEFONO', 1, 0, 'C', 1);
 
 $pdf->Ln();
 $pdf->SetFont('', '');
 $pdf->SetFillColor(255, 255, 255);
 //CONSULTAS DE LOS REGISTROS
-$cargos = consultas::get_datos("select * from sucursal order by id_sucursal");
+$cargos = consultas::get_datos("select * from sucursal order by suc_cod");
 
 if (!empty($cargos)) {
     foreach ($cargos as $cargo) {
-        $pdf->Cell(50, 5, $cargo['id_sucursal'], 1, 0, 'C', 1);
-        $pdf->Cell(0, 5, $cargo['suc_descri'], 1, 0, 'L', 1);
+        $pdf->Cell(50, 5, $cargo['suc_cod'], 1, 0, 'C', 1);
+        $pdf->Cell(0, 5, $cargo['suc_descripcion'], 1, 0, 'L', 1);
+        $pdf->Cell(0, 5, $cargo['suc_telefono'], 1, 0, 'L', 1);
         $pdf->Ln();
     }
 } else {
@@ -91,4 +93,4 @@ if (!empty($cargos)) {
 
 
 //SALIDA AL NAVEGADOR
-$pdf->Output('reporte_marca.pdf', 'I');
+$pdf->Output('reporte_sucursal.pdf', 'I');

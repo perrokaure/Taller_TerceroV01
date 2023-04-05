@@ -5,9 +5,9 @@ require 'clases/conexion.php';
 session_start();
 
 $sql = "select sp_sucursal("
-. $_REQUEST['accion'] . ","
-. $_REQUEST['vid_sucursal']. ",'" 
-. $_REQUEST['vsuc_descri'] . "') as resul";
+    . $_REQUEST['accion'] . ","
+    . $_REQUEST['vsuc_cod'] . ",'"
+    . $_REQUEST['vsuc_descri'] . "') as resul";
 
 $resultado = consultas::get_datos($sql);
 
